@@ -4,7 +4,9 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import express from "express";
 import mongosanitize from "express-mongo-sanitize"
+import connectionToDB from "./config/connectDB.js";
 
+connectionToDB()
 
 const app = express();
 
