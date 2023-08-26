@@ -9,3 +9,27 @@ const fileRotateTransport = new transports.DailyRotateFile({
 	datePattern: "YYYY-MM-DD",
 	maxFiles: "14d",
 });
+
+
+export const systemLogs = createLogger({
+	level: "http",
+	format: combine(
+		timestamp({
+			format: "YYYY-MM-DD hh:mm:ss.SSS A",
+		}),
+		prettyPrint()
+	),
+	transports: [
+		fileRotateTransport,
+		new transports.File({
+			level: "error",
+			filename: "logs/error.log",
+		}),
+	],
+	exceptionHandlers: [
+		new transports.File({ filename: "logs/exception.log" }),
+	],
+	rejectionHandlers: [
+		new transports.File({ filename: "logs/rejections.log" }),
+	],
+});
