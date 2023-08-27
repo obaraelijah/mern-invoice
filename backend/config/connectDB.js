@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import mongoose from "mongoose";
+import { systemLogs } from "../utils/Logger.js";
 
 const connectionToDB = async () => {
 	try {
@@ -15,6 +16,7 @@ const connectionToDB = async () => {
 				`MongoDB Connected: ${connect.connection.host}`
 			)}`
 		);
+		systemLogs.info(`MongoDB Connected: ${connect.connection.host}`);
 	} catch (error) {
 		console.error(`${chalk.red.bold(`Error: ${error.message}`)}`);
 		process.exit(1);
