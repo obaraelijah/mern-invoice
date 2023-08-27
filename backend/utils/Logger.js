@@ -4,12 +4,12 @@ import "winston-daily-rotate-file";
 
 const { combine, timestamp, prettyPrint } = format;
 
+//logs files on a daily basis for  a max of 14 days
 const fileRotateTransport = new transports.DailyRotateFile({
 	filename: "logs/combined-%DATE%.log",
 	datePattern: "YYYY-MM-DD",
 	maxFiles: "14d",
 });
-
 
 export const systemLogs = createLogger({
 	level: "http",
@@ -33,3 +33,24 @@ export const systemLogs = createLogger({
 		new transports.File({ filename: "logs/rejections.log" }),
 	],
 });
+
+// log incoming HTTP requests 
+export const morganMiddleware = morgan(
+	function (tokens, req, res) {
+		return JSON.stringify({
+			method: tokens.method(req, res),
+			url: tokens.url(req, res),
+			status: Number.parseFloat(tokens.status(req, res)),
+			content_length: tokens.res(req, res, "content-length"),
+			response_time: Number.parseFloat(tokens["response-time"](req, res)),
+		});
+	},
+	{
+		stream: {
+			write: (message) => {
+				const data = JSON.parse(message);
+				systemLogs.http(`incoming-request`, data);
+			},
+		},
+	}
+);

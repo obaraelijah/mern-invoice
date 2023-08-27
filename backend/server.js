@@ -6,7 +6,7 @@ import express from "express";
 import mongosanitize from "express-mongo-sanitize"
 import connectionToDB from "./config/connectDB.js";
 
-connectionToDB()
+await connectionToDB();
 
 const app = express();
 
