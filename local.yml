@@ -9,6 +9,7 @@ services:
         volumes:
             - /app/node_modules
             - .:/app
+            - ./logs:/app/logs
         depends_on:
             - mongodb
         ports:
