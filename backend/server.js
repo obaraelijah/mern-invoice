@@ -7,7 +7,8 @@ import mongosanitize from "express-mongo-sanitize"
 import connectionToDB from "./config/connectDB.js";
 import morgan from "morgan";
 import { morganMiddleware, systemLogs } from "./utils/Logger.js";
-import { validateHeaderValue } from "http";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import { apiLimiter } from "./middleware/apiLimiter.js";
 
 await connectionToDB();
 
@@ -32,6 +33,10 @@ app.get("/api/v1/test", (req, res) => {
     res.json({ Hi: "Welcome to the Invoice App" });
 });
 
+app.use(notFound);
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 1997;
 
 app.listen(PORT, () => {
 	console.log(
