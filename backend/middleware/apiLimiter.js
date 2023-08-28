@@ -3,7 +3,7 @@ import { systemLogs } from "../utils/Logger.js"
 
 //apilimiter middleware
 export const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
+    windowMs: 15 * 60 * 1000, // 15 minutes(Time frame for which requests are checked)
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
     message: {
         message:
