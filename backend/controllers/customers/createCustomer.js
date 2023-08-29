@@ -4,7 +4,6 @@ import Customer from "../../models/customerModel.js";
 // $-title   Create Customer
 // $-path    POST /api/v1/customer/create
 // $-auth    Private
-
 const createCustomer = asyncHandler(async (req, res) => {
 	const { email, name, phoneNumber, vatTinNo, address, city, country } =
 		req.body;
