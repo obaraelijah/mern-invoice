@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
-import Customer from "../../models/customerModel";
-import Document from "../../models/documentModel";
+import Customer from "../../models/customerModel.js";
+import Document from "../../models/documentModel.js";
 
 // $-title   Create Document
 // $-path    POST /api/v1/document/create

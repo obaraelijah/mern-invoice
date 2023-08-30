@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import User from "../../models/userModel";
+import User from "../../models/userModel.js";
 
 // $-title   Get User Profile
 // $-path    GET /api/v1/user/profile
