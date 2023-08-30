@@ -10,7 +10,7 @@ const customerSchema = new Schema(
 		createdBy: {
 			type: Schema.Types.ObjectId,
 			required: true,
-			ref: "User",
+			ref: "User", //Reference to the User model
 		},
 		name: {
 			type: String,
