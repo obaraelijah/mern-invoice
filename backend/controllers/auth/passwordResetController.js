@@ -54,9 +54,9 @@ const resetPasswordRequest = asyncHandler(async (req, res) => {
 
 		await sendEmail(
 			existingUser.email,
-			"Password Reset Request",
+			"Password Reset Request", //subject line of email
 			payload,
-			"./emails/template/requestResetPassword.handlebars"
+			"./emails/template/requestResetPassword.handlebars" //path to an email template file that will be used to generate the content of the email.
 		);
 
 		res.status(200).json({
