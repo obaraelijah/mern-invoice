@@ -42,7 +42,7 @@ googleAuth();
 
 app.use(cookieParser());
 
-app.use(mongosanitize());
+app.use(mongoSanitize());
 
 app.use(morganMiddleware);
 
