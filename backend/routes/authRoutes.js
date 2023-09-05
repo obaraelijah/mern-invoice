@@ -32,3 +32,65 @@ router.post("/reset_password_request", resetPasswordRequest);
 router.post("/reset_password", resetPassword);
 
 router.get("/logout", logoutUser);
+
+// route for initiating Google OAuth2.0 authentication
+router.get(
+	"/google",
+	passport.authenticate("google", {
+		session: false,  // stateless auth
+		scope: ["profile", "email"],
+		accessType: "offline",
+		prompt: "consent", //prompts the user for their consent to access their Google account data
+	})
+);
+
+// $-title   Redirect route to the passport google strategy
+// $-path    GET /api/v1/auth/google/redirect
+
+// route for handling the Google OAuth2.0 redirect/callback
+router.get(
+	"/google/redirect",
+	passport.authenticate("google", {
+	  failureRedirect: "/login", 
+	  session: false, 
+	}),
+	async (req, res) => {
+	  const existingUser = await User.findById(req.user.id);
+  
+	  const payload = {
+		id: req.user.id,
+		roles: existingUser.roles,
+		firstName: existingUser.firstName,
+		lastName: existingUser.lastName,
+		username: existingUser.username,
+		provider: existingUser.provider,
+		avatar: existingUser.avatar,
+	  };
+  
+	  // Generate JWT token
+	  jwt.sign(
+		payload,
+		process.env.JWT_ACCESS_SECRET_KEY,
+		{ expiresIn: "20m" },
+		(err, token) => {
+		  // Convert the JWT token to a string
+		  const jwtToken = `${token}`;
+  
+		  // Create an HTML response that stores the JWT in localStorage and redirects to /dashboard
+		  const embedJWT = `
+			<html>
+			  <script>
+				window.localStorage.setItem("googleToken", '${jwtToken}')
+				window.location.href = '/dashboard'
+			  </script>
+			</html>
+		  `;
+		  
+		  // Sends the HTML response to the client
+		  res.send(embedJWT);
+		}
+	  );
+	}
+  );
+  
+  export default router;
