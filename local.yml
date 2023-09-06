@@ -71,7 +71,7 @@ services:
             context: ./docker/local/nginx
             dockerfile: Dockerfile
         ports:
-            - "8080:80"
+            - "9090:80"
         restart: always
         depends_on:
             - api
