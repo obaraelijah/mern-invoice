@@ -107,3 +107,5 @@ const newAccessToken = asyncHandler(async (req, res) => {
 	);
 
 });
+
+export default newAccessToken;

@@ -8,6 +8,7 @@ services:
             dockerfile: ./docker/local/express/Dockerfile
         volumes:
             - /app/node_modules
+            - ./logs:/app/logs
             - .:/app
         depends_on:
             - mongodb

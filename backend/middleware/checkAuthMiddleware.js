@@ -31,3 +31,5 @@ const checkAuth = asyncHandler(async (req, res, next) => {
 		);
 	}
 })
+
+export default checkAuth;
