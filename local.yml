@@ -8,7 +8,6 @@ services:
             dockerfile: ./docker/local/express/Dockerfile
         volumes:
             - /app/node_modules
-            - ./logs:/app/logs
             - .:/app
         depends_on:
             - mongodb
@@ -36,7 +35,7 @@ services:
         image: mongo:5.0.6-focal
         restart: always
         ports:
-            - "27018:27017"
+            - "27017:27017"
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
@@ -59,6 +58,7 @@ services:
             ME_CONFIG_BASICAUTH_PASSWORD: admin123456
         networks:
             - invoice
+
     mailhog:
         image: mailhog/mailhog:v1.0.0
         ports:
@@ -72,7 +72,7 @@ services:
             context: ./docker/local/nginx
             dockerfile: Dockerfile
         ports:
-            - "9090:80"
+            - "8080:80"
         restart: always
         depends_on:
             - api
@@ -81,7 +81,6 @@ services:
             - pdf_volume:/app/docs
         networks:
             - invoice
-
 
 networks:
     invoice:
