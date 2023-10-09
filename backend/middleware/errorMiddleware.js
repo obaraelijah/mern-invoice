@@ -6,7 +6,6 @@ const errorHandler = (err, req, res, next) => {
 		success: false,
 		message: err.message,
 		statusCode,
-        // Include the stack trace if not in production environment
 		stack: process.env.NODE_ENV === "production" ? null : err.stack,
 	});
 };

@@ -25,20 +25,16 @@ const storage = multer.diskStorage({
 
 // Function to check if the uploaded file has an allowed image type
 function checkImageType(file, cb) {
-    // regex for allowed file types (jpeg, jpg, png)
     const filetypes = /jpeg|jpg|png/;
     
     // Check if the file's extension matches one of the allowed types
     const extname = filetypes.test(
         path.extname(file.originalname).toLowerCase()
     );
-    
-    // Check if the file's MIME type (provided by the browser) matches an allowed type
     const mimetype = filetypes.test(file.mimetype);
 
     // If both the extension and MIME type are valid ( supported image type)
     if (extname && mimetype) {
-        // Call the callback function with no error and 'true' to indicate success
         return cb(null, true);
     } else {
         cb("Unsupported file format. You can only upload jpeg, jpg, and png");
