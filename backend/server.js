@@ -21,12 +21,9 @@ await connectionToDB();
 
 const app = express();
 
-const __dirname = path.resolve(); // Get the current directory's absolute path
 
-// Serve files from the "/uploads" directory at the "/uploads" route
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-// Serve files from the "/docs" directory at the "/docs" route
 app.use("/docs", express.static(path.join(__dirname, "/docs")));
 
 if (process.env.NODE_ENV === "development") {
